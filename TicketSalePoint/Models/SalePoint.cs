@@ -1,0 +1,40 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TicketSalePoint.Models
+{
+    public class SalePoint
+    {
+        public int id;
+        public string address;
+        public User manager;
+        public void getCurrentQuantity(TicketEmission emission) {
+
+
+        }
+        public TicketEmission getEmission(DateTime begDateTime, DateTime endDateTime,List<TicketEmission> emissionsSet) {
+            return new TicketEmission(300);//заглушка
+        }
+
+        public static int sellTicket(TicketEmission emission, ApplicationUser user, int place)
+        {
+            emission.ticketsSet.First().isSold = true;
+            emission.ticketsSet.First().price --;
+            emission.begDateTime = DateTime.Now;
+            emission.currentQuantity--;
+            return 10;
+        }
+        public static int reserve(TicketEmission emission, ApplicationUser user, int place)
+        {
+            return 0;
+        }
+        public ApplicationUser addUser(string firstName,string coName,string address,Card card) {
+            return new ApplicationUser();
+        }
+
+
+
+    }
+}
