@@ -9,8 +9,8 @@ namespace TicketSalePoint.Models
     {
     public int id { get; set; }
 
-        public TicketEmission createEmission(double price) {
-            return new TicketEmission(price);
+        public TicketEmission createEmission(double price, DateTime begDateTime, DateTime endDateTime) {
+            return new TicketEmission(price, begDateTime, endDateTime);
         }
 
     }

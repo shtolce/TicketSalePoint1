@@ -15,12 +15,13 @@ namespace TicketSalePoint.Models
 
         }
         public TicketEmission getEmission(DateTime begDateTime, DateTime endDateTime,List<TicketEmission> emissionsSet) {
-            return new TicketEmission(300);//заглушка
+            //return new TicketEmission(300);//заглушка
+            return null;
         }
 
         public static int sellTicket(ref TicketEmission emission, ApplicationUser user, int place)
         {
-            emission.ticketsSet.Where<Ticket>(t=>t.id==place).First().isSold = true;
+            emission.ticketsSet.Where<Ticket>(t=>t.place==place).First().isSold = true;
             //emission.ticketsSet.First().price --;
             emission.begDateTime = DateTime.Now;
             emission.currentQuantity--;

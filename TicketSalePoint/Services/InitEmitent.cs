@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using TicketSalePoint.Models;
 using TicketSalePoint.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using TicketSalePoint.Models.dbcontexts;
+
 namespace TicketSalePoint.Services
 {
     public class InitEmitent
@@ -13,10 +16,17 @@ namespace TicketSalePoint.Services
         public TicketIssuer TicketIssuer;
         public List<SalePoint> salePoints;
         public IndexViewModel ivm;
-        public InitEmitent()
+        public InitEmitent(TicketContext db)
         {
-            TicketIssuer = new TicketIssuer();
-            emission = TicketIssuer.createEmission(500);
+            if (db.TicketEmissions.Count() == 0)
+            {
+                TicketIssuer = new TicketIssuer();
+                emission = TicketIssuer.createEmission(500, DateTime.Now, DateTime.Now.AddHours(3));
+            }
+            else {
+                if (db.TicketEmissions.FirstOrDefault<TicketEmission>(t => t.endDateTime >= DateTime.Now).id!=0)
+                    emission = db.TicketEmissions.FirstOrDefault(t => (t.endDateTime >= DateTime.Now));
+            }
 
             salePoints = new List<SalePoint>() {
                 new SalePoint() {

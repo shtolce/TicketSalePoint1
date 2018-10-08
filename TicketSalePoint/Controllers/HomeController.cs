@@ -24,11 +24,25 @@ namespace TicketSalePoint.Controllers
             this._db = db;
         }
             //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-            public IActionResult Index()
+            public async Task<IActionResult> Index()
         {
             //ivm.currentTicketsSet = emission.ticketsSet.Where(p => p.isSold == true).OrderByDescending(u => u.id);
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
+            if (_db.TicketEmissions.Count() == 0)
+            {
+                _db.TicketEmissions.Add(_service.emission);
+                await _db.SaveChangesAsync();
+            }
+            else
+            {
+                if (_db.TicketEmissions.First<TicketEmission>(t => t.endDateTime >= DateTime.Now).id != 0) {
+                }
+                else
+                    _db.TicketEmissions.Add(_service.emission);
+                    await _db.SaveChangesAsync();
+            }
+
             return View(_service.ivm);
         }
 
@@ -39,6 +53,7 @@ namespace TicketSalePoint.Controllers
             int res;
             int rows,cols;
             res =SalePoint.sellTicket(ref _service.emission, new ApplicationUser(), id);
+
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
             rows = _service.ivm.hallMapping.GetUpperBound(0) + 1;
@@ -48,6 +63,11 @@ namespace TicketSalePoint.Controllers
             int quiotent = Math.DivRem(id, cols, out col);
             col=(col==0)?6:col;
             _service.ivm.hallMapping[row-1,col-1 ]=1;
+
+
+
+
+
             return View(_service.ivm);
         }
 

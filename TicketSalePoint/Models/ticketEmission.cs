@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using TicketSalePoint.Models.dbcontexts;
 
 
 namespace TicketSalePoint.Models
@@ -36,15 +34,19 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
-        public TicketEmission(double price) {
-            this.ticketsSet = new List<Ticket>();
-            for (int i = 1; i <= CURRENT_QUANTITY; i++) {
-                ticketsSet.Add(new Ticket(price,i,i));
-            }
-            this.price = price;
-            this.currentQuantity = CURRENT_QUANTITY;
-            this.begDateTime = DateTime.Now;
-            this.endDateTime = DateTime.Now.AddHours(3);
+        public TicketEmission()
+        {
+        }
+        public TicketEmission(double price, DateTime begDateTime, DateTime endDateTime) {
+                this.ticketsSet = new List<Ticket>();
+                for (int i = 1; i <= CURRENT_QUANTITY; i++)
+                {
+                    ticketsSet.Add(new Ticket(price, i, i));
+                }
+                this.price = price;
+                this.currentQuantity = CURRENT_QUANTITY;
+                this.begDateTime = begDateTime;
+                this.endDateTime = endDateTime;
         }
 
     }
