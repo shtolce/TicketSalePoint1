@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using TicketSalePoint.Models.dbcontexts;
+
 
 namespace TicketSalePoint.Models
 {
     public class TicketEmission   {
         const int CURRENT_QUANTITY = 30;
+        public int id
+        {
+            get;
+            set;
+        }
 
         public List<Ticket> ticketsSet {
             get;

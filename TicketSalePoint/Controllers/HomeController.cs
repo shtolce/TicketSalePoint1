@@ -8,16 +8,20 @@ using TicketSalePoint.Models;
 using TicketSalePoint.ViewModels;
 using System.Web;
 using TicketSalePoint.Services;
+using Microsoft.EntityFrameworkCore;
+using TicketSalePoint.Models.dbcontexts;
+
 namespace TicketSalePoint.Controllers
 {
     public class HomeController : Controller
     {
 
-        private readonly InitEmitent _service;
+        private InitEmitent _service;
+        private TicketContext _db;
 
-        public HomeController(InitEmitent service) {
+        public HomeController(InitEmitent service, TicketContext db) {
             this._service = service;
-
+            this._db = db;
         }
             //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
             public IActionResult Index()

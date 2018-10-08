@@ -7,9 +7,9 @@ namespace TicketSalePoint.Models
 {
     public class SalePoint
     {
-        public int id;
-        public string address;
-        public User manager;
+        public int id { get; set; }
+        public string address { get; set; }
+        public User manager { get; set; }
         public void getCurrentQuantity(TicketEmission emission) {
 
 

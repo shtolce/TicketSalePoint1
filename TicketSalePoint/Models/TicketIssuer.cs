@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace TicketSalePoint.Models
 {
-    public class TicketIssuer  {
+    public class TicketIssuer
+    {
+    public int id { get; set; }
 
         public TicketEmission createEmission(double price) {
             return new TicketEmission(price);

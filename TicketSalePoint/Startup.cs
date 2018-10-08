@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using TicketSalePoint.Data;
 using TicketSalePoint.Models;
 using TicketSalePoint.Services;
+using TicketSalePoint.Models.dbcontexts;
+
 
 namespace TicketSalePoint
 {
@@ -28,6 +30,8 @@ namespace TicketSalePoint
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<TicketContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
