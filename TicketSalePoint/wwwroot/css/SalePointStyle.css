@@ -1,0 +1,20 @@
+﻿.hall {
+background-color:darkcyan;
+border-style:solid;
+border-color:brown;
+}
+.hallPlaces {
+    padding: 30px;
+    border-style: solid;
+    border-color: brown;
+}
+.hallPlacesOccupied {
+    padding: 30px;
+    border-style: solid;
+    border-color: brown;
+    background-color:coral;
+}
+
+.hallPlaces:hover {
+background-color:aqua;
+}

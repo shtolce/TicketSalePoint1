@@ -18,10 +18,10 @@ namespace TicketSalePoint.Models
             return new TicketEmission(300);//заглушка
         }
 
-        public static int sellTicket(TicketEmission emission, ApplicationUser user, int place)
+        public static int sellTicket(ref TicketEmission emission, ApplicationUser user, int place)
         {
-            emission.ticketsSet.First().isSold = true;
-            emission.ticketsSet.First().price --;
+            emission.ticketsSet.Where<Ticket>(t=>t.id==place).First().isSold = true;
+            //emission.ticketsSet.First().price --;
             emission.begDateTime = DateTime.Now;
             emission.currentQuantity--;
             return 10;

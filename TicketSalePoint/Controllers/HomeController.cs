@@ -6,59 +6,45 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TicketSalePoint.Models;
 using TicketSalePoint.ViewModels;
-
-
+using System.Web;
+using TicketSalePoint.Services;
 namespace TicketSalePoint.Controllers
 {
     public class HomeController : Controller
     {
-        private TicketEmission emission;
-        private TicketIssuer TicketIssuer;
-        private List<SalePoint> salePoints;
-        private IndexViewModel ivm;
-        int l;
-        public HomeController() {
-            TicketIssuer = new TicketIssuer();
-            emission = TicketIssuer.createEmission(500);
-            l++;
-            salePoints = new List<SalePoint>() {
-                new SalePoint() {
-                    id=1,
-                    address="ул. Кирова 8 б"
-                },
-                new SalePoint() {
-                    id=2,
-                    address="ул.Красногвардейская 18/2"
-                }
-            };
 
-            ivm = new IndexViewModel {
-                currentTicketsEmission = emission,
-                //currentTicketsSet = emission.ticketsSet.Where(p => p.place < 10).OrderByDescending(u=>u.id),
-               // currentTicketsSet = emission.ticketsSet.Where(p => p.isSold).OrderByDescending(u => u.id),
-                salesPoints = salePoints
-            };
-           
+        private readonly InitEmitent _service;
+
+        public HomeController(InitEmitent service) {
+            this._service = service;
 
         }
-
-        public IActionResult Index()
+            //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+            public IActionResult Index()
         {
             //ivm.currentTicketsSet = emission.ticketsSet.Where(p => p.isSold == true).OrderByDescending(u => u.id);
-            ivm.currentTicketsEmission = emission;
-            ivm.currentTicketsSet = emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
-            return View(ivm);
+            _service.ivm.currentTicketsEmission = _service.emission;
+            _service.ivm.currentTicketsSet = _service.emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
+            return View(_service.ivm);
         }
 
-//        [HttpGet]
-        public IActionResult Sell(string name,int quantity)
+        //        [HttpGet]
+ //       [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public IActionResult Sell(string name,int id)
         {
             int res;
-            res=SalePoint.sellTicket(emission, new ApplicationUser(), 2);
-            ivm.currentTicketsEmission = emission;
-            ivm.currentTicketsSet = emission.ticketsSet;
-            
-            return View(ivm);
+            int rows,cols;
+            res =SalePoint.sellTicket(ref _service.emission, new ApplicationUser(), id);
+            _service.ivm.currentTicketsEmission = _service.emission;
+            _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
+            rows = _service.ivm.hallMapping.GetUpperBound(0) + 1;
+            cols = _service.ivm.hallMapping.GetUpperBound(1) + 1;
+            int row = (int)Math.Ceiling((double)id / cols) ;
+            int col;
+            int quiotent = Math.DivRem(id, cols, out col);
+            col=(col==0)?6:col;
+            _service.ivm.hallMapping[row-1,col-1 ]=1;
+            return View(_service.ivm);
         }
 
 
