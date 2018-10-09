@@ -18,14 +18,14 @@ namespace TicketSalePoint.Services
         public IndexViewModel ivm;
         public InitEmitent(TicketContext db)
         {
-            if (db.TicketEmissions.Count() == 0)
-            {
+            if (db.TicketEmissions.Count() == 0) {
                 TicketIssuer = new TicketIssuer();
                 emission = TicketIssuer.createEmission(500, DateTime.Now, DateTime.Now.AddHours(3));
             }
             else {
-                if (db.TicketEmissions.FirstOrDefault<TicketEmission>(t => t.endDateTime >= DateTime.Now).id!=0)
-                    emission = db.TicketEmissions.FirstOrDefault(t => (t.endDateTime >= DateTime.Now));
+                if (db.TicketEmissions.FirstOrDefault(t => t.endDateTime >= DateTime.Now).id!=0)
+                    emission = db.TicketEmissions.Include(t=>t.ticketsSet).FirstOrDefault(t => (t.endDateTime >= DateTime.Now));
+
             }
 
             salePoints = new List<SalePoint>() {

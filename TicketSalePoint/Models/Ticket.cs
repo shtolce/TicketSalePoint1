@@ -39,6 +39,9 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
+        public Ticket() {
+        }
+
         public Ticket(double price,int id,int place) {
             this.price = price;
         //    this.id = id;

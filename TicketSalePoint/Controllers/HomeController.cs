@@ -26,6 +26,9 @@ namespace TicketSalePoint.Controllers
             //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
             public async Task<IActionResult> Index()
         {
+            int res;
+            int rows, cols;
+
             //ivm.currentTicketsSet = emission.ticketsSet.Where(p => p.isSold == true).OrderByDescending(u => u.id);
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
@@ -42,13 +45,22 @@ namespace TicketSalePoint.Controllers
                     _db.TicketEmissions.Add(_service.emission);
                     await _db.SaveChangesAsync();
             }
+            rows = _service.ivm.hallMapping.GetUpperBound(0)+1;
+            cols = _service.ivm.hallMapping.GetUpperBound(1)+1;
+            for (int i = 0; i <= rows-1; i++)
+            {
+                for (int j = 0; j <= cols-1; j++)
+                {
+                    _service.ivm.hallMapping[i, j] = _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.id == _service.emission.id).ticketsSet[i * cols + j].isSold ? 1 : 0;
+                }
+            }
 
             return View(_service.ivm);
         }
 
         //        [HttpGet]
  //       [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public IActionResult Sell(string name,int id)
+        public async Task<IActionResult> Sell(string name,int id)
         {
             int res;
             int rows,cols;
@@ -63,11 +75,8 @@ namespace TicketSalePoint.Controllers
             int quiotent = Math.DivRem(id, cols, out col);
             col=(col==0)?6:col;
             _service.ivm.hallMapping[row-1,col-1 ]=1;
-
-
-
-
-
+            _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.id == _service.emission.id).ticketsSet[id-1].isSold = true;
+            await _db.SaveChangesAsync();
             return View(_service.ivm);
         }
 
