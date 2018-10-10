@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $("isSold").css("backgroundColor", "yellow");
+    $("[isSold=1]").css("backgroundColor", "yellow");
 
 
 });

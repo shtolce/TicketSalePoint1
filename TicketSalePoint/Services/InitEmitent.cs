@@ -23,9 +23,13 @@ namespace TicketSalePoint.Services
                 emission = TicketIssuer.createEmission(500, DateTime.Now, DateTime.Now.AddHours(3));
             }
             else {
-                if (db.TicketEmissions.FirstOrDefault(t => t.endDateTime >= DateTime.Now).id!=0)
-                    emission = db.TicketEmissions.Include(t=>t.ticketsSet).FirstOrDefault(t => (t.endDateTime >= DateTime.Now));
-
+                if (db.TicketEmissions.FirstOrDefault(t => t.endDateTime >= DateTime.Now) != null)
+                    emission = db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => (t.endDateTime >= DateTime.Now));
+                else
+                {
+                    TicketIssuer = new TicketIssuer();
+                    emission = TicketIssuer.createEmission(500, DateTime.Now, DateTime.Now.AddHours(3));
+                }
             }
 
             salePoints = new List<SalePoint>() {
