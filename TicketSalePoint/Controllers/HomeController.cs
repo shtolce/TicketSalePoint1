@@ -30,8 +30,10 @@ namespace TicketSalePoint.Controllers
             int rows, cols;
 
             //ivm.currentTicketsSet = emission.ticketsSet.Where(p => p.isSold == true).OrderByDescending(u => u.id);
-            _service.ivm.currentTicketsEmission = _service.emission;
-            _service.ivm.currentTicketsSet = _service.emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
+            //_service.ivm.currentTicketsEmission = _service.emission;
+            //_service.ivm.currentTicketsSet = _service.emission.ticketsSet;
+            //.Where(p => p.id<10).OrderByDescending(u => u.id);
+            /*
             if (_db.TicketEmissions.Count() == 0)
             {
                 _db.TicketEmissions.Add(_service.emission);
@@ -45,15 +47,24 @@ namespace TicketSalePoint.Controllers
                     _db.TicketEmissions.Add(_service.emission);
                     await _db.SaveChangesAsync();
             }
-            rows = _service.ivm.hallMapping.GetUpperBound(0)+1;
-            cols = _service.ivm.hallMapping.GetUpperBound(1)+1;
-            for (int i = 0; i <= rows-1; i++)
+            */
+
+            foreach (TicketEmission curEmmision in _db.TicketEmissions)
             {
-                for (int j = 0; j <= cols-1; j++)
+                int[,] curArr = _service.ivm.hallMappings.FirstOrDefault(t => t.Key == curEmmision.id).Value;
+                rows = curArr.GetUpperBound(0) + 1;
+                cols = curArr.GetUpperBound(1) + 1;
+                for (int i = 0; i <= rows - 1; i++)
                 {
-                    _service.ivm.hallMapping[i, j] = _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.id == _service.emission.id).ticketsSet[i * cols + j].isSold ? 1 : 0;
+                    for (int j = 0; j <= cols - 1; j++)
+                    {
+                        curArr[i, j] = _db.TicketEmissions.Include(t => t.ticketsSet).
+                            FirstOrDefault(t => t.id == curEmmision.id).ticketsSet[i * cols + j].isSold ? 1 : 0;
+                    }
                 }
+                 _service.ivm.hallMappings[curEmmision.id]=curArr;
             }
+
 
             return View(_service.ivm);
         }

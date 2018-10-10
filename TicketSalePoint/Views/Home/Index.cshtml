@@ -10,39 +10,46 @@
 
 }
 
-@{
-    int rowsTotal = Model.hallMapping.GetUpperBound(0);
-    int colsTotal = Model.hallMapping.GetUpperBound(1);
-}
 <link rel="stylesheet" href="css/SalePointStyle.css">
 
 <h2>Места в зале</h2>
-<table class="hall">
-    @for (int i = 0; i <= rowsTotal; i++)
-    {
-        <tr>
-            @for (int j = 0; j <= colsTotal; j++)
-            {
 
-                int idx = i * (colsTotal+1) + j+1;
-                int isSold = Model.hallMapping[i,j];
-            <td class="hallPlaces" onclick="sellTicket(event)" id=@idx isSold=@isSold>@isSold|@idx</td>
-            }
-        </tr>
-    }
-</table>
+@foreach (TicketEmission curEmmision in Model.TicketsEmissions)
+{
+    int[,] curArr = Model.hallMappings.FirstOrDefault(t => t.Key == curEmmision.id).Value;
+    int rowsTotal = curArr.GetUpperBound(0);
+    int colsTotal = curArr.GetUpperBound(1);
 
-<form method="get" action="home/sell">
-    <p>
-        <label>Имя</label><br />
-        <input type="text" name="name" />
-    </p>
-    <p>
-        <label>Количество</label><br />
-        <input type="number" name="quantity" />
-    </p>
-    <p>
-        <input type="submit" value="Отправить" />
-    </p>
-</form>
-</script>
+    <table class="hall">
+        <thead>
+        <td>@curEmmision.begDateTime @curEmmision.endDateTime</td>
+        </thead>
+
+        @for (int i = 0; i <= rowsTotal; i++)
+        {
+            <tr>
+                @for (int j = 0; j <= colsTotal; j++)
+                {
+
+                    int idx = i * (colsTotal + 1) + j + 1;
+                    int isSold = Model.hallMapping[i, j];
+                    <td class="hallPlaces" onclick="sellTicket(event)" id=@idx isSold=@isSold>@isSold|@idx</td>
+                }
+            </tr>
+        }
+    </table>
+}
+    <form method="get" action="home/sell">
+        <p>
+            <label>Имя</label><br />
+            <input type="text" name="name" />
+        </p>
+        <p>
+            <label>Количество</label><br />
+            <input type="number" name="quantity" />
+        </p>
+        <p>
+            <input type="submit" value="Отправить" />
+        </p>
+    </form>
+    </script>
