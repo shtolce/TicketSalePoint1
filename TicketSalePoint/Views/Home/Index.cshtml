@@ -9,8 +9,8 @@
 {
 
 }
-<script src="/js/site.js">
-</script>
+
+
 @{
     int rowsTotal = Model.hallMapping.GetUpperBound(0);
     int colsTotal = Model.hallMapping.GetUpperBound(1);
@@ -24,7 +24,6 @@
         <tr>
             @for (int j = 0; j <= colsTotal; j++)
             {
-
                 int idx = i * (colsTotal+1) + j+1;
                 int isSold = Model.hallMapping[i,j];
             <td class="hallPlaces" onclick="sellTicket(event)" id=@idx isSold=@isSold>@isSold|@idx</td>
@@ -46,6 +45,3 @@
         <input type="submit" value="Отправить" />
     </p>
 </form>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="/js/HallPlaces.js">
-</script>

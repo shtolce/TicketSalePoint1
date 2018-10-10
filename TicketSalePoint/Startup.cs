@@ -42,7 +42,9 @@ namespace TicketSalePoint
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
-            services.AddTransient<InitEmitent>();
+            //services.AddTransient<InitEmitent>();//создает каждый раз новые обьекты класса,при запросе обьекта , не в самом запросе
+            services.AddScoped<InitEmitent>();//Здесь при каждом новом запросе создается один обьект и остается прежним для этого же запроса.
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

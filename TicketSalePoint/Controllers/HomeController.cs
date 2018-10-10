@@ -39,7 +39,7 @@ namespace TicketSalePoint.Controllers
             }
             else
             {
-                if (_db.TicketEmissions.First<TicketEmission>(t => t.endDateTime >= DateTime.Now).id != 0) {
+                if (_db.TicketEmissions.FirstOrDefault<TicketEmission>(t => t.endDateTime >= DateTime.Now) != null) {
                 }
                 else
                     _db.TicketEmissions.Add(_service.emission);
