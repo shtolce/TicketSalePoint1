@@ -10,7 +10,9 @@ namespace TicketSalePoint.ViewModels
     {
         public IEnumerable<Ticket> currentTicketsSet;
         public TicketEmission currentTicketsEmission;
+        public IEnumerable<TicketEmission> TicketsEmissions;
         public IEnumerable<SalePoint> salesPoints;
+        
         public int[,] hallMapping ={
                                     {0,0,0,0,0,0 }
                                    ,{0,0,0,0,0,0 }
@@ -19,7 +21,14 @@ namespace TicketSalePoint.ViewModels
                                    ,{0,0,0,0,0,0 }
                                     };
 
-        public void test() {
+        public Dictionary<int, int[,]> hallMappings = new Dictionary<int, int[,]>();
+
+        public IndexViewModel() {
+
+
+
+
+
         }
     }
 }
