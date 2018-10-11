@@ -12,7 +12,9 @@ namespace TicketSalePoint.ViewModels
         public TicketEmission currentTicketsEmission;
         public IEnumerable<TicketEmission> TicketsEmissions;
         public IEnumerable<SalePoint> salesPoints;
-        
+        public static int ROWS = 5;
+        public static int COLS = 6;
+
         public int[,] hallMapping ={
                                     {0,0,0,0,0,0 }
                                    ,{0,0,0,0,0,0 }

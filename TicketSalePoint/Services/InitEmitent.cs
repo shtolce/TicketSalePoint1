@@ -11,7 +11,6 @@ namespace TicketSalePoint.Services
 {
     public class InitEmitent
     {
-
         public TicketEmission emission;
         public TicketIssuer TicketIssuer;
         public List<SalePoint> salePoints;
@@ -46,15 +45,10 @@ namespace TicketSalePoint.Services
             ivm = new IndexViewModel
             {
                 currentTicketsEmission = emission,
-                //currentTicketsSet = emission.ticketsSet.Where(p => p.place < 10).OrderByDescending(u=>u.id),
-                // currentTicketsSet = emission.ticketsSet.Where(p => p.isSold).OrderByDescending(u => u.id),
                 salesPoints = salePoints,
             };
 
-
         }
-
-
 
 
     }
