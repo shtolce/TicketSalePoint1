@@ -1,9 +1,7 @@
 ﻿$(document).ready(function () {
     
-    if ($("td, .hallPlaces").attr('isSold')==1) {
-        alert($(this).attr('id'));
-        $("td, .hallPlaces").css("backgroundColor", "yellow");
-    }
+    $("td[isSold=1]").css("backgroundColor", "orange");
+    $("td[isSold=1]").removeAttr('onclick');
 
 
 });

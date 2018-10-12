@@ -26,46 +26,21 @@ namespace TicketSalePoint.Controllers
             //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
             public async Task<IActionResult> Index()
         {
-            int res;
-            int rows, cols;
-
-            //ivm.currentTicketsSet = emission.ticketsSet.Where(p => p.isSold == true).OrderByDescending(u => u.id);
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
-            if (_db.TicketEmissions.Count() == 0)
-            {
-                _db.TicketEmissions.Add(_service.emission);
-                await _db.SaveChangesAsync();
-            }
-            else
-            {
-                if (_db.TicketEmissions.FirstOrDefault<TicketEmission>(t => t.endDateTime >= DateTime.Now) != null) {
-                }
-                else
-                    _db.TicketEmissions.Add(_service.emission);
-                    await _db.SaveChangesAsync();
-            }
-            rows = _service.ivm.hallMapping.GetUpperBound(0)+1;
-            cols = _service.ivm.hallMapping.GetUpperBound(1)+1;
-            for (int i = 0; i <= rows-1; i++)
-            {
-                for (int j = 0; j <= cols-1; j++)
-                {
-                    _service.ivm.hallMapping[i, j] = _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.id == _service.emission.id).ticketsSet[i * cols + j].isSold ? 1 : 0;
-                }
-            }
-
             return View(_service.ivm);
         }
 
-        //        [HttpGet]
- //       [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public async Task<IActionResult> Sell(string name,int id)
+        //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public async Task<IActionResult> Sell(string name,int id,int curEmissionId)
         {
             int res;
             int rows,cols;
-            res =SalePoint.sellTicket(ref _service.emission, new ApplicationUser(), id);
 
+            //теперь в InitEmitent в _service.emission будет последняя по операции продажи эмиссия
+            _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmissionId);
+            res = SalePoint.sellTicket(ref _service.emission, new ApplicationUser(), id, curEmissionId);
+            //-----
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
             rows = _service.ivm.hallMapping.GetUpperBound(0) + 1;
