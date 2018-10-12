@@ -5,28 +5,48 @@
 @{
     ViewData["Title"] = "Покупка билетов";
 }
+<link rel="stylesheet" href="css/SalePointStyle.css">
+
 
 
 @{
     int rowsTotal = Model.hallMapping.GetUpperBound(0);
+
     int colsTotal = Model.hallMapping.GetUpperBound(1);
 }
-<link rel="stylesheet" href="css/SalePointStyle.css">
+
 
 <h2>Места в зале</h2>
-<table class="hall">
-    @for (int i = 0; i <= rowsTotal; i++)
-    {
-        <tr>
-            @for (int j = 0; j <= colsTotal; j++)
-            {
-                int idx = i * (colsTotal+1) + j+1;
-                int isSold = Model.hallMapping[i,j];
-            <td class="hallPlaces" onclick="sellTicket(event)" id=@idx isSold=@isSold>@isSold|@idx</td>
-            }
-        </tr>
-    }
-</table>
+
+@foreach (TicketEmission te in ivm.TicketsEmissions)
+{
+	<table class="hall">
+		<thead>
+		<td colspan=6>
+		"С"+te.begDateTime +" по " + te.endDateTime + "Цена:" +te.price
+		</td>
+		
+		</thead>
+
+
+		@for (int i = 0; i <= rowsTotal; i++)
+		{
+			<tr>
+				@for (int j = 0; j <= colsTotal; j++)
+				{
+					int idx = i * (colsTotal+1) + j+1;
+					int isSold = Model.hallMapping[i,j];
+				<td class="hallPlaces" onclick="sellTicket(event)" id=@idx isSold=@isSold>@isSold|@idx</td>
+				}
+			</tr>
+		}
+	</table>
+}
+
+
+
+
+
 
 <form method="get" action="home/sell">
     <p>
