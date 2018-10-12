@@ -18,7 +18,7 @@ namespace TicketSalePoint.Models
             return null;
         }
 
-        public static int sellTicket(ref TicketEmission emission, ApplicationUser user, int place)
+        public static int sellTicket(ref TicketEmission emission, ApplicationUser user, int place,int curEmissionId)
         {
             emission.ticketsSet.Where<Ticket>(t=>t.place==place).First().isSold = true;
             emission.currentQuantity--;

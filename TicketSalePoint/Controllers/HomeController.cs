@@ -32,12 +32,15 @@ namespace TicketSalePoint.Controllers
         }
 
         //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public async Task<IActionResult> Sell(string name,int id)
+        public async Task<IActionResult> Sell(string name,int id,int curEmissionId)
         {
             int res;
             int rows,cols;
-            res =SalePoint.sellTicket(ref _service.emission, new ApplicationUser(), id);
 
+            //теперь в InitEmitent в _service.emission будет последняя по операции продажи эмиссия
+            _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmissionId);
+            res = SalePoint.sellTicket(ref _service.emission, new ApplicationUser(), id, curEmissionId);
+            //-----
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
             rows = _service.ivm.hallMapping.GetUpperBound(0) + 1;
