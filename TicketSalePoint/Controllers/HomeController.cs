@@ -56,6 +56,16 @@ namespace TicketSalePoint.Controllers
         }
 
 
+        public IActionResult SellForm(string name, int id, int curEmissionId)
+        {
+            _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmissionId);
+            _service.ivm.currentTicketsEmission = _service.emission;
+            _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
+            return View(_service.ivm);
+        }
+
+
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
