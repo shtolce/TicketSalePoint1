@@ -6,7 +6,13 @@ function sellTicketForm(e) {
 
 
 function sellTicket(e) {
-    $('body').load('/home/sell?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
+    e.preventDefault();
+    $('input[type="text"]').each(function (name, value) {
+        alert(name);
+    });
+
+
+    //$('body').load('/home/sell?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
 }
 
 

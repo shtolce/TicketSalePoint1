@@ -6,11 +6,12 @@
     ViewData["Title"] = "Заказ и бронирование билетов";
 }
 
-<h2>
-<b>Форма заказа и бронирования билетов</b>
-</h2>
 
-<form method="get" action="home/sell">
+<h3>
+    <b>Форма заказа и бронирования билетов на сеанс  с @Model.currentTicketsEmission.begDateTime  по  @Model.currentTicketsEmission.endDateTime </b>
+</h3>
+
+<form method="post" action="home/sell" onsubmit="sellTicket(event)">
 <div style="float: left;margin-right: 35px;" >
 	        <label>Введите количество взрослых билетов</label><br />
 			<input id="ticketNumber" type="text" name="kol" value="2" onchange="ticketsNumberChange()" />
@@ -60,7 +61,7 @@
 	</tr>
 </table>
 <br>
-<input type="submit" value="Забронировать места">
+<input type="submit" value="Забронировать места" >
 </input>
 
 
