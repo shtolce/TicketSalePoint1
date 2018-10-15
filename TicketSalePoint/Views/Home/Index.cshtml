@@ -34,7 +34,7 @@
 				{
 					int idx = i * (colsTotal+1) + j+1;
 					int isSold = Model.hallMappings[te.id][i,j];
-					<td class="hallPlaces" onclick="sellTicket(event)" id=@idx isSold=@isSold curEmissionId=@te.id>
+					<td class="hallPlaces" onclick="sellTicketForm(event)" id=@idx isSold=@isSold curEmissionId=@te.id>
 						@isSold|@idx
 					</td>
 				}
@@ -43,21 +43,3 @@
 	</table>
 }
 
-
-
-
-
-
-<form method="get" action="home/sell">
-    <p>
-        <label>Имя</label><br />
-        <input type="text" name="name" />
-    </p>
-    <p>
-        <label>Количество</label><br />
-        <input type="number" name="quantity" />
-    </p>
-    <p>
-        <input type="submit" value="Отправить" />
-    </p>
-</form>

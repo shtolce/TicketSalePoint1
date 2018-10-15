@@ -3,36 +3,70 @@
 
 @model TicketSalePoint.ViewModels.IndexViewModel
 @{
-    ViewData["Title"] = "Покупка билетов";
+    ViewData["Title"] = "Заказ и бронирование билетов";
 }
-<table class="table">
-    <tr>
-		<th>Место в зале</th>	
-		<th>Цена билета</th>
-		<th>Номер</th>
-		<th>Продан</th>
+
+<h2>
+<b>Форма заказа и бронирования билетов</b>
+</h2>
+
+<form method="get" action="home/sell">
+<div style="float: left;margin-right: 35px;" >
+	        <label>Введите количество взрослых билетов</label><br />
+			<input id="ticketNumber" type="text" name="kol" value="2" onchange="ticketsNumberChange()" />
+</div>
+<div>
+
+	        <label>Количество детских билетов</label><br />
+			<input id="ticketNumberChildren" type="text" name="kol" value="2" onchange="ticketsNumberChangeChildren()" />
+</div>
+<br>
+
+<table class="OrderTableTemplate" style="float: left;margin-right: 20px;"> 
+	<thead bgcolor="coral">
+		<th colspan=2 >Для взрослых</th>	
+	</thead>
+
+    <tr  bgcolor="coral" class="OrderTemplateHeader2">
+		<td class="orderRowId1">ФИО</td>	
+		<td class="orderRowId2">Моб.Тел.№</td>
     </tr>
-    @foreach (Ticket t in Model.currentTicketsSet)
-    {
-     <tr>
-        <td>@t.place</td>
-     	<td>@t.price</td>
-		<td>@t.id</td>
-    	<td>@t.isSold</td>
+     <tr class="orderRowTemplate">
+        <td class="orderRowId1">
+			<input type="text" name="fIO" placeholder="ФИО взрослого" class="orderRowId1"/>
+		</td>
+     	<td class="orderRowId2">
+			<input type="text" name="phone" placeholder="Мобильный телефон" class="orderRowId2"/>
+		</td>
 	</tr>
-    }
 </table>
-<form method="get" action ="">
-    <p>
-        <label>Имя</label><br />
-        <input type="text" name="name" />
-    </p>
-    <p>
-        <label>Количество</label><br />
-        <input type="number" name="quantity" />
-    </p>
-    <p>
-        <input type="submit" value="Отправить" />
-    </p>
+
+<table class="OrderTableTemplateChildren" style="clear: left"> 
+	<thead bgcolor="coral">
+		<th colspan=2>Для детей</th>	
+	</thead>
+
+    <tr  bgcolor="coral" class="OrderTemplateHeader2">
+		<td class="orderRowId1">ФИО</td>	
+		<td class="orderRowId2">Возраст</td>
+    </tr>
+     <tr class="orderRowTemplateChildren">
+        <td class="orderRowId1">
+			<input type="text" name="fIO" placeholder="Имя ребенка" class="orderRowId1"/>
+		</td>
+     	<td class="orderRowId2">
+			<input type="text" name="age" placeholder="Возраст" class="orderRowId2"/>
+		</td>
+	</tr>
+</table>
+<br>
+<input type="submit" value="Забронировать места">
+</input>
+
+
 </form>
-<a href="/home">Назад к списку</a>
+
+
+<br  style="clear: left">
+<br  style="clear: left">
+<a href="/home"  class="bottom-content">Назад к списку</a>

@@ -18,3 +18,26 @@ border-color:brown;
 .hallPlaces:hover {
 background-color:aqua;
 }
+
+.OrderTableTemplate th{
+    text-align: center;
+}
+.OrderTableTemplateChildren th {
+    text-align: center;
+}
+
+
+.orderRowId1 {
+    width:350px;
+}
+.orderRowId2 {
+    width: 150px;
+}
+.orderRowId3 {
+    width: 250px;
+
+}
+
+.bottom-content {
+    clear:left;
+}

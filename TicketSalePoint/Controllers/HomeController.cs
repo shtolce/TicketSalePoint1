@@ -23,8 +23,8 @@ namespace TicketSalePoint.Controllers
             this._service = service;
             this._db = db;
         }
-            //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-            public async Task<IActionResult> Index()
+        //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public async Task<IActionResult> Index()
         {
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
@@ -32,6 +32,7 @@ namespace TicketSalePoint.Controllers
         }
 
         //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        [HttpPost]
         public async Task<IActionResult> Sell(string name,int id,int curEmissionId)
         {
             int res;
@@ -63,8 +64,6 @@ namespace TicketSalePoint.Controllers
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
             return View(_service.ivm);
         }
-
-
 
         public IActionResult About()
         {
