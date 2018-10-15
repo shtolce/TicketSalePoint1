@@ -35,6 +35,8 @@ namespace TicketSalePoint.Controllers
         [HttpPost]
         public async Task<IActionResult> Sell(string name,int id,int curEmissionId)
         {
+
+            /*
             int res;
             int rows,cols;
 
@@ -54,6 +56,8 @@ namespace TicketSalePoint.Controllers
             _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.id == _service.emission.id).ticketsSet[id-1].isSold = true;
             await _db.SaveChangesAsync();
             return View(_service.ivm);
+            */
+            return View();
         }
 
 
