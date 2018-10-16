@@ -95,16 +95,21 @@ namespace TicketSalePoint.Controllers
             rows = _service.ivm.hallMapping.GetUpperBound(0) + 1;
             cols = _service.ivm.hallMapping.GetUpperBound(1) + 1;
 
+            int idx = 0;
+            foreach (var ce in _service.emission.ticketsSet) {
+                idx++;
+                int row = (int)Math.Ceiling((double)idx / cols);
+                int col;
+                int quiotent = Math.DivRem(idx, cols, out col);
+                col = (col == 0) ? 6 : col;
+                _service.ivm.hallMapping[row - 1, col - 1] = Convert.ToInt32(ce.isSold);
+                _db.TicketEmissions.Include(t => t.ticketsSet).
+                    FirstOrDefault(t => t.id == _service.emission.id).
+                    ticketsSet[idx - 1].isSold = ce.isSold;
+                _db.SaveChanges();
 
+            }
 
-
-            int row = (int)Math.Ceiling((double)id / cols);
-            int col;
-            int quiotent = Math.DivRem(id, cols, out col);
-            col = (col == 0) ? 6 : col;
-            _service.ivm.hallMapping[row - 1, col - 1] = 1;
-            _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.id == _service.emission.id).ticketsSet[id - 1].isSold = true;
-            _db.SaveChanges();
             //пробный код конец
             return View(_service.ivm);
         }
