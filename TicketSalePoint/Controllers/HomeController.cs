@@ -10,6 +10,7 @@ using System.Web;
 using TicketSalePoint.Services;
 using Microsoft.EntityFrameworkCore;
 using TicketSalePoint.Models.dbcontexts;
+using Microsoft.AspNetCore.Http;
 
 namespace TicketSalePoint.Controllers
 {
@@ -32,7 +33,7 @@ namespace TicketSalePoint.Controllers
         }
 
         //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        [HttpPost]
+        [HttpGet]  //оставил для архива
         public async Task<IActionResult> Sell(string name,int id,int curEmissionId)
         {
             int res;
@@ -56,6 +57,53 @@ namespace TicketSalePoint.Controllers
             return View(_service.ivm);
         }
 
+        [HttpPost]
+        public IActionResult Sell(int curEmId)
+        {
+            int res;
+            int rows, cols;
+
+            int adultsNum = Convert.ToInt32(Request.Form["kol"].ToString());
+            int childrensNum = Convert.ToInt32(Request.Form["kolChildren"].ToString());
+            List<User> ListCustomer=new List<User>();
+            for (int i=0;i<=adultsNum-1;i++)
+            {
+                User Adult=new User();
+                Adult.firstName = Request.Form["fio"][i];
+                Adult.phoneNumber = Request.Form["phone"][i];
+                Adult.isChildren = false;
+                ListCustomer.Add(Adult);
+            }
+
+            for (int i = 0; i <= childrensNum-1; i++)
+            {
+                User Child = new User();
+                Child.firstName = Request.Form["fioChildren"][i];
+                Child.age = Convert.ToInt32(Request.Form["age"][i]);
+                Child.isChildren = true;
+                ListCustomer.Add(Child);
+            }
+            _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmId);
+            res = SalePoint.sellTicket(ref _service.emission, adultsNum, childrensNum);
+            _service.ivm.currentTicketsEmission = _service.emission;
+            _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
+            //пробный код начало
+            rows = _service.ivm.hallMapping.GetUpperBound(0) + 1;
+            cols = _service.ivm.hallMapping.GetUpperBound(1) + 1;
+
+
+
+
+            int row = (int)Math.Ceiling((double)id / cols);
+            int col;
+            int quiotent = Math.DivRem(id, cols, out col);
+            col = (col == 0) ? 6 : col;
+            _service.ivm.hallMapping[row - 1, col - 1] = 1;
+            _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.id == _service.emission.id).ticketsSet[id - 1].isSold = true;
+            _db.SaveChanges();
+            //пробный код конец
+            return View(_service.ivm);
+        }
 
         public IActionResult SellForm(string name, int id, int curEmissionId)
         {

@@ -30,5 +30,23 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
+        public string phoneNumber
+        {
+            get;
+            set;
+        }
+        public int age
+        {
+            get;
+            set;
+        }
+        public bool isChildren
+        {
+            get;
+            set;
+        }
+
+
+
     }
 }
