@@ -6,11 +6,12 @@
     ViewData["Title"] = "Заказ и бронирование билетов";
 }
 
-<h2>
-<b>Форма заказа и бронирования билетов</b>
-</h2>
 
-<form method="POST" action="home/sell?curEmId=@Model.currentTicketsEmission.id">
+<h3>
+    <b>Форма заказа и бронирования билетов на сеанс  с @Model.currentTicketsEmission.begDateTime  по  @Model.currentTicketsEmission.endDateTime </b>
+</h3>
+
+<form method="post" action="home/sell">
 <div style="float: left;margin-right: 35px;" >
 	        <label>Введите количество взрослых билетов</label><br />
 			<input id="ticketNumber" type="text" name="kol" value="2" onchange="ticketsNumberChange()" />
@@ -18,7 +19,7 @@
 <div>
 
 	        <label>Количество детских билетов</label><br />
-			<input id="ticketNumberChildren" type="text" name="kolChildren" value="2" onchange="ticketsNumberChangeChildren()" />
+			<input id="ticketNumberChildren" type="text" name="kol" value="2" onchange="ticketsNumberChangeChildren()" />
 </div>
 <br>
 
@@ -52,7 +53,7 @@
     </tr>
      <tr class="orderRowTemplateChildren">
         <td class="orderRowId1">
-			<input type="text" name="fioChildren" placeholder="Имя ребенка" class="orderRowId1"/>
+			<input type="text" name="fIO" placeholder="Имя ребенка" class="orderRowId1"/>
 		</td>
      	<td class="orderRowId2">
 			<input type="text" name="age" placeholder="Возраст" class="orderRowId2"/>
@@ -60,7 +61,7 @@
 	</tr>
 </table>
 <br>
-<input type="submit" value="Забронировать места">
+<input type="submit" value="Забронировать места" >
 </input>
 
 
