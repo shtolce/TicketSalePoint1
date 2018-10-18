@@ -30,7 +30,7 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
-        [Phone]
+
         public string phoneNumber
         {
             get;

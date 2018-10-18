@@ -6,10 +6,20 @@
     newOrderTemplateRow.appendTo(".OrderTableTemplate").fadeIn();
     var newOrderTemplateRow = $(".orderRowTemplateChildren").clone().removeClass("orderRowTemplateChildren");
     newOrderTemplateRow.appendTo(".OrderTableTemplateChildren").fadeIn();
+    $("form").validate({
+        rules: {
+            kol: { required: true }
+            , ticketNumber: { required: true }
+
+        }
+
+    });
+
 
 });
 
 function ticketsNumberChange() {
+
     var ticketNumber = $("#ticketNumber").val();
     $(".OrderTableTemplate tr:gt(2)").remove();
     for (i = 1; i <= ticketNumber-1; i++) {

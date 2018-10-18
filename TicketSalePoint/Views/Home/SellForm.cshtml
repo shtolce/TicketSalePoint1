@@ -10,11 +10,11 @@
 <h3>
     <b>Форма заказа и бронирования билетов на сеанс  с @Model.currentTicketsEmission.begDateTime  по  @Model.currentTicketsEmission.endDateTime </b>
 </h3>
-
-<form method="post" action="home/sell?">
+<div id="OrderForm">
+<form method="post" action="home/sell?" >
 <input type="hidden" name="curEmId" value=@Model.currentTicketsEmission.id>
-<div style="float: left;margin-right: 35px;" >
-	        <label>Введите количество взрослых билетов</label><br />
+<div id="formdiv" style="float: left;margin-right: 35px;" >
+	        <label for="ticketNumber">Введите количество взрослых билетов</label><br />
 			<input id="ticketNumber" type="text" name="kol" value="2" onchange="ticketsNumberChange()" />
 </div>
 <div>
@@ -67,7 +67,7 @@
 
 
 </form>
-
+</div>
 
 <br  style="clear: left">
 <br  style="clear: left">
