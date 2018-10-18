@@ -11,9 +11,10 @@ using TicketSalePoint.Models.dbcontexts;
 namespace TicketSalePoint.Migrations
 {
     [DbContext(typeof(TicketContext))]
-    partial class TicketContextModelSnapshot : ModelSnapshot
+    [Migration("20181018021755_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,26 +73,6 @@ namespace TicketSalePoint.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Cards");
-                });
-
-            modelBuilder.Entity("TicketSalePoint.Models.Order", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Comments");
-
-                    b.Property<int?>("Emissionid");
-
-                    b.Property<double>("InitialCost");
-
-                    b.Property<DateTime>("OrderDate");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("Emissionid");
-
-                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("TicketSalePoint.Models.SalePoint", b =>
@@ -195,8 +176,6 @@ namespace TicketSalePoint.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("Orderid");
-
                     b.Property<string>("address");
 
                     b.Property<int>("age");
@@ -215,18 +194,9 @@ namespace TicketSalePoint.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Orderid");
-
                     b.HasIndex("cardid");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("TicketSalePoint.Models.Order", b =>
-                {
-                    b.HasOne("TicketSalePoint.Models.TicketEmission", "Emission")
-                        .WithMany()
-                        .HasForeignKey("Emissionid");
                 });
 
             modelBuilder.Entity("TicketSalePoint.Models.SalePoint", b =>
@@ -253,10 +223,6 @@ namespace TicketSalePoint.Migrations
 
             modelBuilder.Entity("TicketSalePoint.Models.User", b =>
                 {
-                    b.HasOne("TicketSalePoint.Models.Order")
-                        .WithMany("Customers")
-                        .HasForeignKey("Orderid");
-
                     b.HasOne("TicketSalePoint.Models.Card", "card")
                         .WithMany()
                         .HasForeignKey("cardid");

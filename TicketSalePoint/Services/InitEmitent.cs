@@ -73,6 +73,7 @@ namespace TicketSalePoint.Services
                 currentTicketsEmission = emission
                 ,TicketsEmissions = _db.TicketEmissions 
                 ,salesPoints = salePoints
+                ,Orders = _db.Orders.ToList()
             };
 
             int rows, cols;
@@ -90,7 +91,6 @@ namespace TicketSalePoint.Services
                     }
                 }
                 ivm.hallMappings.Add(te.id,hallMapping);
-                
             }
 
 

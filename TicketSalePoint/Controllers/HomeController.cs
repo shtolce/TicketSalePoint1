@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using TicketSalePoint.Models.dbcontexts;
 using Microsoft.AspNetCore.Http;
 
+
 namespace TicketSalePoint.Controllers
 {
     public class HomeController : Controller
@@ -31,12 +32,12 @@ namespace TicketSalePoint.Controllers
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;//.Where(p => p.id<10).OrderByDescending(u => u.id);
             return View(_service.ivm);
         }
-
-        //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        [HttpGet]  //оставил для архива
+        
+                //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+                [HttpGet]  //оставил для архива
         public async Task<IActionResult> Sell(string name,int id,int curEmissionId)
         {
-
+            
             /*
             int res;
             int rows,cols;
@@ -66,7 +67,6 @@ namespace TicketSalePoint.Controllers
         {
             int res;
             int rows, cols;
-
             int adultsNum = Convert.ToInt32(Request.Form["kol"].ToString());
             int childrensNum = Convert.ToInt32(Request.Form["kolChildren"].ToString());
             List<User> ListCustomer=new List<User>();
@@ -91,10 +91,17 @@ namespace TicketSalePoint.Controllers
             res = SalePoint.sellTicket(ref _service.emission, adultsNum, childrensNum);
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
-            //пробный код начало
+            Order singleOrder = new Order();
+            singleOrder.Comments = "shtolce_test";
+            singleOrder.Emission = _service.emission;
+            singleOrder.Customers = ListCustomer;
+            singleOrder.InitialCost = singleOrder.CalculateAnOrderCostDynamic();
+            singleOrder.OrderDate = DateTime.Now;
+            _db.Orders.Add(singleOrder);
+            _db.SaveChanges();
+            _service.ivm.Orders.Add(singleOrder);
             rows = _service.ivm.hallMapping.GetUpperBound(0) + 1;
             cols = _service.ivm.hallMapping.GetUpperBound(1) + 1;
-
             int idx = 0;
             foreach (var ce in _service.emission.ticketsSet) {
                 idx++;
@@ -109,8 +116,7 @@ namespace TicketSalePoint.Controllers
                 _db.SaveChanges();
 
             }
-
-            //пробный код конец
+            ViewData["CurrentOrderId"] = singleOrder.id;
             return View(_service.ivm);
         }
 

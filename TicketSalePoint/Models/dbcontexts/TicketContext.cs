@@ -15,6 +15,7 @@ namespace TicketSalePoint.Models.dbcontexts
         public DbSet<TicketEmission> TicketEmissions { get; set; }
         public DbSet<SalePoint> SalePoints { get; set; }
         public DbSet<TicketIssuer> TicketIssuers { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
 
 

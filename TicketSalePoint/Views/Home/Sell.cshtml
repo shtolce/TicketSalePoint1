@@ -3,36 +3,39 @@
 
 @model TicketSalePoint.ViewModels.IndexViewModel
 @{
-    ViewData["Title"] = "Покупка билетов";
+    ViewData["Title"] = "Заказ №" +ViewData["CurrentOrderId"];
+	Order order = Model.Orders.FirstOrDefault(t=>t.id==Convert.ToInt32(ViewData["CurrentOrderId"])  );
 }
+
+<h2>
+	<b>
+		Заказ номер @order.id от @order.OrderDate
+	</b>
+<h2>
+<h3>
+	Комментарий к заявке @order.Comments
+<h3>
+<h3>
+	Рассчетная стоимость @order.InitialCost
+<h3>
+
 <table class="table">
     <tr>
-		<th>Место в зале</th>	
-		<th>Цена билета</th>
-		<th>Номер</th>
-		<th>Продан</th>
+		<th>ФИО</th>	
+		<th>номер телефона</th>
+		<th>Возраст</th>
+		<th>Ребенок?</th>
     </tr>
-    @foreach (Ticket t in Model.currentTicketsSet)
-    {
+
+	
+@foreach (User c in order.Customers)
+{
      <tr>
-        <td>@t.place</td>
-     	<td>@t.price</td>
-		<td>@t.id</td>
-    	<td>@t.isSold</td>
+        <td>@c.firstName</td>
+     	<td>@c.phoneNumber</td>
+		<td>@c.age</td>
+    	<td>@c.isChildren</td>
 	</tr>
-    }
+}
 </table>
-<form method="get" action ="">
-    <p>
-        <label>Имя</label><br />
-        <input type="text" name="name" />
-    </p>
-    <p>
-        <label>Количество</label><br />
-        <input type="number" name="quantity" />
-    </p>
-    <p>
-        <input type="submit" value="Отправить" />
-    </p>
-</form>
 <a href="/home">Назад к списку</a>
