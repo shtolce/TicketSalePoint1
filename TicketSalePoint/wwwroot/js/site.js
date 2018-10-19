@@ -11,9 +11,6 @@ function sellTicket(e) {
         alert(name);
     });
 
-
-
-
     //$('body').load('/home/sell?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
 }
 

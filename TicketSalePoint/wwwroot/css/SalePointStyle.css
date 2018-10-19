@@ -28,16 +28,22 @@ background-color:aqua;
 
 
 .orderRowId1 {
-    width:350px;
+    width: 350px;
+    vertical-align: top;
 }
 .orderRowId2 {
     width: 150px;
+    vertical-align: top;
 }
 .orderRowId3 {
     width: 250px;
-
 }
 
 .bottom-content {
     clear:left;
+}
+
+.dcell {
+    display:table-cell;
+       vertical-align:top;
 }
