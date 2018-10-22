@@ -1,0 +1,1 @@
+﻿update tickets set isSold = 'true'
