@@ -18,7 +18,7 @@
 </div>
 <div>
 	        <label for="ticketNumberChildren">Количество детских билетов</label><br />
-			<input id="ticketNumberChildren" type="text" name="kolChildren" value="1" onchange="ticketsNumberChangeChildren()" />
+			<input id="ticketNumberChildren" type="text"  min=1 max=30 name="kolChildren" value="1" onchange="ticketsNumberChangeChildren()" />
 </div>
 <br>
 
@@ -34,10 +34,10 @@
 	<div class="dcell">
 		 <tr class="orderRowTemplate">
 				<td class="_orderRowId1">
-					<input type="text" name="fIO" placeholder="ФИО взрослого" class="orderRowId1"/>
+					<input type="text" name="fIO" placeholder="ФИО взрослого" class="orderRowId1" required="true"/>
 				</td>
      			<td class="_orderRowId2">
-					<input type="text" name="phone" placeholder="Мобильный телефон" class="orderRowId2" />
+					<input type="text" name="phone" placeholder="Мобильный телефон" class="orderRowId2"  required="true"/>
 				</td>
 		</tr>
 	</div>
@@ -55,10 +55,10 @@
 	<div class="dcell">
 		 <tr class="orderRowTemplateChildren">
 				<td class="_orderRowId1" >
-					<input type="text" name="fIOChildren" placeholder="Имя ребенка" class="orderRowId1"/>
+					<input type="text" name="fIOChildren" placeholder="Имя ребенка" class="orderRowId1"  required="true"/>
 				</td>
      			<td class="_orderRowId2">
-					<input type="text" name="age" placeholder="Возраст" class="orderRowId2"/>
+					<input type="text" name="age" placeholder="Возраст" class="orderRowId3"  required="true"/>
 				</td>
 		</tr>
 	</div>

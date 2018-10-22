@@ -2,62 +2,29 @@
     
     $("td[isSold=1]").css("backgroundColor", "orange");
     $("td[isSold=1]").removeAttr('onclick');
-    
+
+    jQuery.validator.addMethod("checkMask", function (value, element) {
+        return /\+\d{1}\(\d{3}\)\d{3}-\d{4}/g.test(value);
+    });
 
     $.validator.addClassRules({
         orderRowId1: {
-            required: true,
-            digits: true,
-            min: 0,
-            max: 100
+            minlength: "5"
         },
         orderRowId2: {
-            required: true,
-            digits: true,
-            min: 0,
-            max: 100
+            checkMask: true
         }
+        
     });
+    $('form').validate();   
 
+//    $('.orderRowId2').mask("+7(999)999-9999", { autoclear: false });
 
-        $('#OrderForm').validate({
-            rules: {
-                kol: {
-                    required: true,
-                    digits: true,
-                    min: 1,
-                    max: 30
-                }
-                , kolChildren: {
-                    required: true,
-                    min: 1,
-                    max: 30
-                }
-                , fIO: {
-                    required: true
-                }
-                , phone: {
-                    required: true
-                }
-                , fIOChildren: {
-                    required: true
-                }
-                , age: {
-                    required: true
-                }
+    $('form').submit(
+        function(e) {
+            $('form').validate().element($(e.target));
 
-            },
-            highlight: function (element, errorClass) {
-                $(element).add($(element).parent()).addClass("invalidElem");
-            },
-            unhighlight: function (element, errorClass) {
-                $(element).add($(element).parent()).removeClass("invalidElem");
-            },
-            errorElement: "tr",
-            errorClass: "errorMessages",
-            validClass: "success"
         });
-
 
 
 });  //document.Ready()
