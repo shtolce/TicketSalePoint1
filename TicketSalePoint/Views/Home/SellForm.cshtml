@@ -9,66 +9,69 @@
 <h3>
     <b>Форма заказа и бронирования билетов на сеанс  с @Model.currentTicketsEmission.begDateTime  по  @Model.currentTicketsEmission.endDateTime </b>
 </h3>
+<div id="errorBox">
+</div>
+
 <div id="OrderForm">
-<form method="post" action="home/sell?" id="formid">
-<input type="hidden" name="curEmId" value=@Model.currentTicketsEmission.id>
-<div style="float: left;margin-right: 35px;" >
-	        <label for="ticketNumber">Введите количество взрослых билетов</label><br />
-			<input id="ticketNumber" type="text" name="kol" value="1" onchange="ticketsNumberChange()" />
-</div>
-<div>
-	        <label for="ticketNumberChildren">Количество детских билетов</label><br />
-			<input id="ticketNumberChildren" type="text"  min=1 max=30 name="kolChildren" value="1" onchange="ticketsNumberChangeChildren()" />
-</div>
-<br>
-
-<table class="OrderTableTemplate" style="float: left;margin-right: 20px;"> 
-	<thead bgcolor="coral">
-		<th colspan=2 >Для взрослых</th>	
-	</thead>
-
-    <tr  bgcolor="coral" class="OrderTemplateHeader2">
-		<td class="_orderRowId1">ФИО</td>	
-		<td class="_orderRowId2">Моб.Тел.№</td>
-    </tr>
-	<div class="dcell">
-		 <tr class="orderRowTemplate">
-				<td class="_orderRowId1">
-					<input type="text" name="fIO" placeholder="ФИО взрослого" class="orderRowId1" required="true"/>
-				</td>
-     			<td class="_orderRowId2">
-					<input type="text" name="phone" placeholder="Мобильный телефон" class="orderRowId2"  required="true"/>
-				</td>
-		</tr>
+	<form method="post" action="home/sell?" id="formid">
+	<input type="hidden" name="curEmId" value=@Model.currentTicketsEmission.id>
+	<div style="float: left;margin-right: 35px;" >
+				<label for="ticketNumber">Введите количество взрослых билетов</label><br />
+				<input id="ticketNumber" type="text" name="kol" value="1" onchange="ticketsNumberChange()" />
 	</div>
-</table>
-
-<table class="OrderTableTemplateChildren" style="clear: left"> 
-	<thead bgcolor="coral">
-		<th colspan=2>Для детей</th>	
-	</thead>
-
-    <tr  bgcolor="coral" class="OrderTemplateHeader2">
-		<td class="_orderRowId1">ФИО</td>	
-		<td class="_orderRowId2">Возраст</td>
-    </tr>
-	<div class="dcell">
-		 <tr class="orderRowTemplateChildren">
-				<td class="_orderRowId1" >
-					<input type="text" name="fIOChildren" placeholder="Имя ребенка" class="orderRowId1"  required="true"/>
-				</td>
-     			<td class="_orderRowId2">
-					<input type="text" name="age" placeholder="Возраст" class="orderRowId3"  required="true"/>
-				</td>
-		</tr>
+	<div>
+				<label for="ticketNumberChildren">Количество детских билетов</label><br />
+				<input id="ticketNumberChildren" type="text" name="kolChildren" value="1" onchange="ticketsNumberChangeChildren()" />
 	</div>
-</table>
-<br>
-<input type="submit" value="Забронировать места" >
-</input>
+	<br>
+
+	<table class="OrderTableTemplate" style="float: left;margin-right: 20px;"> 
+		<thead bgcolor="coral">
+			<th colspan=2 >Для взрослых</th>	
+		</thead>
+
+		<tr  bgcolor="coral" class="OrderTemplateHeader2">
+			<td class="_orderRowId1">ФИО</td>	
+			<td class="_orderRowId2">Моб.Тел.№</td>
+		</tr>
+		<div class="dcell">
+			 <tr class="orderRowTemplate">
+					<td class="_orderRowId1">
+						<input type="text" id="fIO" name="fIO" placeholder="ФИО взрослого" class="orderRowId1"/>
+					</td>
+     				<td class="_orderRowId2">
+						<input type="text" id="phone" name="phone" placeholder="Мобильный телефон" class="orderRowId2" />
+					</td>
+			</tr>
+		</div>
+	</table>
+
+	<table class="OrderTableTemplateChildren" style="clear: left"> 
+		<thead bgcolor="coral">
+			<th colspan=2>Для детей</th>	
+		</thead>
+
+		<tr  bgcolor="coral" class="OrderTemplateHeader2">
+			<td class="_orderRowId1">ФИО</td>	
+			<td class="_orderRowId2">Возраст</td>
+		</tr>
+		<div class="dcell">
+			 <tr class="orderRowTemplateChildren">
+					<td class="_orderRowId1" >
+						<input type="text" name="fIOChildren" placeholder="Имя ребенка" class="orderRowId1Ch"/>
+					</td>
+     				<td class="_orderRowId2">
+						<input type="text" name="age" placeholder="Возраст" class="orderRowId2Ch"/>
+					</td>
+			</tr>
+		</div>
+	</table>
+	<br>
+	<input type="submit" value="Забронировать места" >
+	</input>
 
 
-</form>
+	</form>
 </div>
 
 <br  style="clear: left">
