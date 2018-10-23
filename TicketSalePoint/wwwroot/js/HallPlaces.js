@@ -46,11 +46,13 @@ $(document).ready(function ()
             var attr = $(this).attr('aria-invalid');
             if (typeof attr !== typeof undefined)
             {
-                if ($(this).attr('aria-invalid') && (this.type != 'hidden'))
+                if (($(this).attr('aria-invalid')=="false") && (this.type != 'hidden'))
+                {
                     areAllFieldsValid = false;
+                    alert($(this).attr('aria-invalid'));
+                }
             }
         });
-        alert(areAllFieldsValid);
         return (areAllFieldsValid);
     });
 
