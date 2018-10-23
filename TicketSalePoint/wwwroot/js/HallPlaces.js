@@ -1,60 +1,167 @@
 ﻿var isSubmitAllowed;
-function validatePass() {
+function validatePass()
+{
     $('form input').each(function (index, elem)
     {
-        if (elem.className == 'orderRowId1' || elem.className == 'orderRowId2')
+        $("form").data('validator').resetForm();
+
+        if (elem.id == 'ticketNumber' || elem.id == 'ticketNumberChildren')
         {
             $(elem).rules("add",
             {
-                min: 10,
-                max: 20,
                 required: true,
+                min: 1,
+                max: 30,
                 messages:
                 {
-                    max: "больше 20",
-                    min: "меньше 10"
+                       required: "обязательное поле",
+                       min: "некорретный ввод",
+                       max: "<=30"
                 }
             })
-        }
+        };
+        if (elem.className == 'orderRowId1' )
+        {
+            $(elem).rules("add",
+            {
+                required: true,
+                minlength: 4,
+                messages:
+                {
+                       required:  "обязательное поле_",
+                       minlength: "Введите корректное имя"
+                },
+                highlight: function (element, errorClass)
+                {
+                    $(element).add($(element).parent()).addClass("invalidElem");
+                },
+                unhighlight: function (element, errorClass)
+                {
+                    $(element).add($(element).parent()).removeClass("invalidElem");
+                }
+
+
+            })
+        };
+        if (elem.className == 'orderRowId2') {
+            $(elem).rules("add",
+                {
+                    required: true,
+                    minlength: 10,
+                    phoneUS: true,
+                    messages:
+                    {
+                        required: "обязательное поле",
+                        minlength: "Введите номер телефона"
+                    },
+                    highlight: function (element, errorClass)
+                    {
+                        $(element).add($(element).parent()).addClass("invalidElem");
+                    },
+                    unhighlight: function (element, errorClass)
+                    {
+                        $(element).add($(element).parent()).removeClass("invalidElem");
+                    }
+
+                })
+        };
+        if (elem.className == 'orderRowId1Ch') {
+            $(elem).rules("add",
+                {
+                    required: true,
+                    minlength: 4,
+                    messages:
+                        {
+                            required: "обязательное поле",
+                            minlength: "Введите правильное имя ребенка"
+                        },
+                    highlight: function (element, errorClass) {
+                        $(element).add($(element).parent()).addClass("invalidElem");
+                    },
+                    unhighlight: function (element, errorClass) {
+                        $(element).add($(element).parent()).removeClass("invalidElem");
+                    }
+
+
+                })
+        };
+        if (elem.className == 'orderRowId2Ch')
+        {
+            $(elem).rules("add",
+                {
+                    required: true,
+                    min: 1,
+                    max: 15,
+                    messages:
+                        {
+                            required: "обязательное поле",
+                            min: "неправильно введен возраст"
+                        },
+                    highlight: function (element, errorClass)
+                    {
+                        $(element).add($(element).parent()).addClass("invalidElem");
+                    },
+                    unhighlight: function (element, errorClass)
+                    {
+                        $(element).add($(element).parent()).removeClass("invalidElem");
+                    }
+                })
+        };
     });
 }
+
+
 $(document).ready(function ()
 {
+
+
     $("td[isSold=1]").css("backgroundColor", "orange");
     $("td[isSold=1]").removeAttr('onclick');
     $('form').validate(
-        {
-            highlight: function (element, errorClass)
-            {
-                $(element).add($(element).parent()).addClass("invalidElem");
-            },
-            unhighlight: function (element, errorClass)
-            {
-                $(element).add($(element).parent()).removeClass("invalidElem");
-            },
-            errorElement: "tr",
-            errorClass: "errorMessages",
-            validClass: "success"
-        });
-    validatePass();
-    $('form').submit(function()
     {
-        var areAllFieldsValid = true;
-        $('form input').each(function(e)
-        {
-            $('form input').validate().element($(this));
-            var attr = $(this).attr('aria-invalid');
-            if (typeof attr !== typeof undefined)
-            {
-                if ($(this).attr('aria-invalid') && (this.type != 'hidden'))
-                    areAllFieldsValid = false;
-            }
-        });
-        alert(areAllFieldsValid);
-        return (areAllFieldsValid);
+         highlight: function (element, errorClass)
+         {
+            $(element).add($(element).parent()).addClass("invalidElem");
+         },
+         unhighlight: function (element, errorClass)
+         {
+            $(element).add($(element).parent()).removeClass("invalidElem");
+         }
     });
 
-});  //document.Ready()
+    jQuery.validator.addMethod('phoneUS', function (phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, '');
+        return this.optional(element) || phone_number.length > 9 &&
+            phone_number.match(/^(8|\+7)910\d{7}$/);
+    }, 'Please enter a valid phone number.'); 
+
+    $('form').submit(function ()
+    {
+        var areAllFieldsValid = true;
+        jQuery.validator.messages.required = "";
+        $('form input').each(function (index, elem)
+        {
+            validatePass();
+            if (!$(elem).valid())
+            {
+                areAllFieldsValid = false;
+            }
+        });
+        return (areAllFieldsValid);
+    });
+    $('input').blur(function(e) {
+        $('form').validate().element($(e.target));
+    });
+
+
+}); 
+
+
+$('form input').each(function (index, elem) {
+    $(elem).mask('+7(000)000-00-00');
+}
+
+
 
 function ticketsNumberChange()
 {
@@ -65,14 +172,7 @@ function ticketsNumberChange()
         var newOrderTemplateRow = $(".orderRowTemplate").clone().removeClass("orderRowTemplate");
         newOrderTemplateRow.appendTo(".OrderTableTemplate").fadeIn();
     }
-    validatePass();
-    $('form input').each(function (e)
-    {
-            $('form').validate().element($(this));
-    });
-
 }
-
 function ticketsNumberChangeChildren()
 {
     var ticketNumber = $("#ticketNumberChildren").val();
@@ -83,16 +183,4 @@ function ticketsNumberChangeChildren()
         newOrderTemplateRow.appendTo(".OrderTableTemplateChildren").fadeIn();
     }
 
-    validatePass();
-
-    $('form input').each(function (e)
-    {
-        $('form').validate().element($(this));
-    });
-
 }
-
-
-
-
-
