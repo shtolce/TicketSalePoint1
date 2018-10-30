@@ -132,7 +132,7 @@ $(document).ready(function ()
     jQuery.validator.addMethod('phoneUS', function (phone_number, element) {
         phone_number = phone_number.replace(/\s+/g, '');
         return this.optional(element) || phone_number.length > 9 &&
-            phone_number.match(/^(8|\+7)910\d{7}$/);
+            phone_number.match(/^(8|\+7)\(\d{3}\)\d{7}$/);
     }, 'Please enter a valid phone number.'); 
 
     $('form').submit(function ()
@@ -153,14 +153,10 @@ $(document).ready(function ()
         $('form').validate().element($(e.target));
     });
 
+    $('#input').mask('+7(000)0000000');
+
 
 }); 
-
-
-$('form input').each(function (index, elem) {
-    $(elem).mask('+7(000)000-00-00');
-}
-
 
 
 function ticketsNumberChange()

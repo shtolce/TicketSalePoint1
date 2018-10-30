@@ -25,7 +25,7 @@ namespace TicketSalePoint.Controllers
             this._service = service;
             this._db = db;
         }
-        //        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Index()
         {
             _service.ivm.currentTicketsEmission = _service.emission;
@@ -33,8 +33,8 @@ namespace TicketSalePoint.Controllers
             return View(_service.ivm);
         }
         
-                //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-                [HttpGet]  //оставил для архива
+        //[ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        [HttpGet]  //оставил для архива
         public async Task<IActionResult> Sell(string name,int id,int curEmissionId)
         {
             
@@ -141,6 +141,15 @@ namespace TicketSalePoint.Controllers
 
             return View();
         }
+        [HttpGet]
+        public IActionResult OrderList()
+        {
+            ViewData["Message"] = "OrderList.";
+
+            return View();
+        }
+
+
 
         public IActionResult Error()
         {
