@@ -26,6 +26,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">TicketSalePoint</a>
             </div>
@@ -34,6 +35,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="OrderList">Список заказов</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -73,7 +75,7 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/js/HallPlaces.js" asp-append-version="true"></script>
-        <script src="~/js/jquery.mask.js"></script>
+		<script src="~/js/jquery.mask.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

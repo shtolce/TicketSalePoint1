@@ -113,8 +113,6 @@ function validatePass()
 
 $(document).ready(function ()
 {
-    $("#phone").mask("+7(000)0000000");
-
 
 
     $("td[isSold=1]").css("backgroundColor", "orange");
@@ -134,7 +132,7 @@ $(document).ready(function ()
     jQuery.validator.addMethod('phoneUS', function (phone_number, element) {
         phone_number = phone_number.replace(/\s+/g, '');
         return this.optional(element) || phone_number.length > 9 &&
-            phone_number.match(/^(8|\+7)\(\d{3}\)\d{7}$/)
+            phone_number.match(/^(8|\+7)\(\d{3}\)\d{7}$/);
     }, 'Please enter a valid phone number.'); 
 
     $('form').submit(function ()
@@ -155,8 +153,11 @@ $(document).ready(function ()
         $('form').validate().element($(e.target));
     });
 
+    $('#input').mask('+7(000)0000000');
+
 
 }); 
+
 
 function ticketsNumberChange()
 {
@@ -167,8 +168,6 @@ function ticketsNumberChange()
         var newOrderTemplateRow = $(".orderRowTemplate").clone().removeClass("orderRowTemplate");
         newOrderTemplateRow.appendTo(".OrderTableTemplate").fadeIn();
     }
-    $(".orderRowId2").mask("+7(000)0000000");
-
 }
 function ticketsNumberChangeChildren()
 {
@@ -179,6 +178,5 @@ function ticketsNumberChangeChildren()
         var newOrderTemplateRow = $(".orderRowTemplateChildren").clone().removeClass("orderRowTemplateChildren");
         newOrderTemplateRow.appendTo(".OrderTableTemplateChildren").fadeIn();
     }
-    $(".orderRowId2").mask("+7(000)0000000");
 
 }
