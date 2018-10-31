@@ -145,11 +145,20 @@ namespace TicketSalePoint.Controllers
         public IActionResult OrderList()
         {
             ViewData["Message"] = "OrderList.";
+            _service.ivm.Orders = _db.Orders.Include(t => t.Customers).ToList();
 
-            return View();
+            return View(_service.ivm);
         }
 
-
+        [HttpPost]
+        public IActionResult deleteOrder(int deleteOrder)
+        {
+            var order = _db.Orders.Include(t => t.Customers).FirstOrDefault(t => t.id == deleteOrder);
+            _db.Orders.Remove(order);
+            _db.SaveChanges();
+            return Redirect("~/Home/OrderList");
+        }
+        
 
         public IActionResult Error()
         {

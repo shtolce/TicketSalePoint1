@@ -1,5 +1,6 @@
 ﻿@using TicketSalePoint.Models;
 @using TicketSalePoint.ViewModels;
+@model TicketSalePoint.ViewModels.IndexViewModel
 
 @{
     ViewData["Title"] = "Список заказов";
@@ -7,9 +8,46 @@
 <h2><center>Список заказов</center></h2>
 
 
+@foreach (Order Order in Model.Orders)
+{
+
+<h2>
+    <b>
+        Заказ номер @Order.id от @Order.OrderDate
+        <form name="form1" action="~/Home/deleteOrder" method="POST">
+            <input type="hidden" name="deleteOrder" value=@Order.id />
+        </form>
+        <a href="#" onClick="document.forms['form1'].submit()">Удалить заказ</a>
+
+    </b>
+</h2>
+<h3>
+	Комментарий к заявке @Order.Comments
+</h3>
+<h3>
+	Рассчетная стоимость @Order.InitialCost
+</h3>
 
 
+    <table class="table">
+        <tr>
+            <th>ФИО</th>
+            <th>номер телефона</th>
+            <th>Возраст</th>
+            <th>Ребенок?</th>
+        </tr>
 
+        @foreach (User c in Order.Customers)
+        {
+            <tr>
+                <td>@c.firstName</td>
+                <td>@c.phoneNumber</td>
+                <td>@c.age</td>
+                <td>@c.isChildren</td>
+            </tr>
+        }
 
+    </table>
 
+}    
 <a href="/home">Назад к списку</a>
