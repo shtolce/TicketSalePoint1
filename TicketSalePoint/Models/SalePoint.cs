@@ -32,17 +32,22 @@ namespace TicketSalePoint.Models
             return new ApplicationUser();
         }
 
-        public static int sellTicket(ref TicketEmission emission, int adultsNum, int childrensNum)
+        public static List<Ticket> sellTicket(ref TicketEmission emission, int adultsNum, int childrensNum)
         {
             //emission.ticketsSet.Where<Ticket>(t => t.place == place).First().isSold = true;
             //emission.currentQuantity--;
-            for (int i=0;i<=adultsNum+childrensNum-1;i++)
-                emission.ticketsSet.Where<Ticket>(t => t.isSold == false).ElementAt(i).isSold = true;
+            List<Ticket> arTick=new List<Ticket>();
+            for (int i = 0; i <= adultsNum + childrensNum - 1; i++)
+            {
+                var el = emission.ticketsSet.Where<Ticket>(t => t.isSold == false).ElementAt(i);
+                el.isSold = true;
+                arTick.Add(el);
+
+            }
 
 
 
-
-            return 10;
+            return arTick;
         }
 
 

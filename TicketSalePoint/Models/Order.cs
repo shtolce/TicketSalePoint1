@@ -31,6 +31,9 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
+        public List<Ticket> SoldTickets;
+
+
         public static double CalculateAnOrderCostStatic() {
             return 500;
         }

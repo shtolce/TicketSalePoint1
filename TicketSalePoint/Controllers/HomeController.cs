@@ -65,7 +65,7 @@ namespace TicketSalePoint.Controllers
         [HttpPost]
         public IActionResult Sell(int curEmId)
         {
-            int res;
+            List<Ticket> res;
             int rows, cols;
             int adultsNum = Convert.ToInt32(Request.Form["kol"].ToString());
             int childrensNum = Convert.ToInt32(Request.Form["kolChildren"].ToString());
@@ -97,6 +97,7 @@ namespace TicketSalePoint.Controllers
             singleOrder.Customers = ListCustomer;
             singleOrder.InitialCost = singleOrder.CalculateAnOrderCostDynamic();
             singleOrder.OrderDate = DateTime.Now;
+            singleOrder.SoldTickets = res;
             _db.Orders.Add(singleOrder);
             _db.SaveChanges();
             _service.ivm.Orders.Add(singleOrder);
@@ -154,6 +155,11 @@ namespace TicketSalePoint.Controllers
         public IActionResult deleteOrder(int deleteOrder)
         {
             var order = _db.Orders.Include(t => t.Customers).FirstOrDefault(t => t.id == deleteOrder);
+            var ts = order.Emission.ticketsSet;
+            ts.Intersect(order.SoldTickets);
+            ts.ForEach(t => { t.isSold = true;t.price = 0; });
+
+
             _db.Orders.Remove(order);
             _db.SaveChanges();
             return Redirect("~/Home/OrderList");

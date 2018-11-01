@@ -39,6 +39,11 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
+        public int OrderId {
+            get;
+            set;
+        }
+
         public Ticket() {
         }
 

@@ -1,4 +1,6 @@
 ﻿@using TicketSalePoint.Models;
+@using System.Text;
+
 @using TicketSalePoint.ViewModels;
 @model TicketSalePoint.ViewModels.IndexViewModel
 
@@ -10,23 +12,25 @@
 
 @foreach (Order Order in Model.Orders)
 {
+    string classFormId = "form"+ @Order.id;
+    string eventStr = "document.forms." + @classFormId + ".submit()";
 
-<h2>
-    <b>
-        Заказ номер @Order.id от @Order.OrderDate
-        <form name="form1" action="~/Home/deleteOrder" method="POST">
-            <input type="hidden" name="deleteOrder" value=@Order.id />
-        </form>
-        <a href="#" onClick="document.forms['form1'].submit()">Удалить заказ</a>
+    <h2>
+        <b>
+            Заказ номер @Order.id от @Order.OrderDate
+            <form name='@classFormId' action="~/Home/deleteOrder" method="POST">
+                <input type="hidden" name="deleteOrder" value=@Order.id />
+            </form>
+            <a href="#" onClick='@eventStr'>Удалить заказ</a>
 
-    </b>
-</h2>
-<h3>
-	Комментарий к заявке @Order.Comments
-</h3>
-<h3>
-	Рассчетная стоимость @Order.InitialCost
-</h3>
+        </b>
+    </h2>
+    <h3>
+        Комментарий к заявке @Order.Comments
+    </h3>
+    <h3>
+        Рассчетная стоимость @Order.InitialCost
+    </h3>
 
 
     <table class="table">
@@ -49,5 +53,5 @@
 
     </table>
 
-}    
+}
 <a href="/home">Назад к списку</a>
