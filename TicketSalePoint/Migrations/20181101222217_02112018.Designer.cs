@@ -11,9 +11,10 @@ using TicketSalePoint.Models.dbcontexts;
 namespace TicketSalePoint.Migrations
 {
     [DbContext(typeof(TicketContext))]
-    partial class TicketContextModelSnapshot : ModelSnapshot
+    [Migration("20181101222217_02112018")]
+    partial class _02112018
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,8 +136,6 @@ namespace TicketSalePoint.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("OrderId");
-
                     b.HasIndex("TicketEmissionid");
 
                     b.HasIndex("customerId");
@@ -242,11 +241,6 @@ namespace TicketSalePoint.Migrations
 
             modelBuilder.Entity("TicketSalePoint.Models.Ticket", b =>
                 {
-                    b.HasOne("TicketSalePoint.Models.Order")
-                        .WithMany("SoldTickets")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("TicketSalePoint.Models.TicketEmission")
                         .WithMany("ticketsSet")
                         .HasForeignKey("TicketEmissionid");

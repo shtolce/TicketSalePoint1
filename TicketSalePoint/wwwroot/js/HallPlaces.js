@@ -153,7 +153,7 @@ $(document).ready(function ()
         $('form').validate().element($(e.target));
     });
 
-    $('#input').mask('+7(000)0000000');
+    $('#phone').mask('+7(000)0000000');
 
 
 }); 

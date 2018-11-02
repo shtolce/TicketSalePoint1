@@ -31,7 +31,10 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
-        public List<Ticket> SoldTickets;
+        public List<Ticket> SoldTickets {
+            get;
+            set;
+        }
 
 
         public static double CalculateAnOrderCostStatic() {

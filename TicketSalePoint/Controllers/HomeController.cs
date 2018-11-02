@@ -147,24 +147,24 @@ namespace TicketSalePoint.Controllers
         {
             ViewData["Message"] = "OrderList.";
             _service.ivm.Orders = _db.Orders.Include(t => t.Customers).ToList();
-
             return View(_service.ivm);
         }
 
         [HttpPost]
         public IActionResult deleteOrder(int deleteOrder)
         {
-            var order = _db.Orders.Include(t => t.Customers).FirstOrDefault(t => t.id == deleteOrder);
+            var order = _db.Orders.Include(t => t.Customers).Include(t=>t.SoldTickets).FirstOrDefault(t => t.id == deleteOrder);
+            var orderWithoutJoints = _db.Orders.FirstOrDefault(t => t.id == deleteOrder);
             var ts = order.Emission.ticketsSet;
-            ts.Intersect(order.SoldTickets);
-            ts.ForEach(t => { t.isSold = true;t.price = 0; });
-
-
+            var st = order.SoldTickets;
+            //var tsIntersected = ts.Intersect(order.SoldTickets).ToList();
+            //tsIntersected.ForEach(t => { t.isSold = false;t.price = 0; });
+            st.ForEach(t => { t.isSold = false; t.price = 0; });
+            //_db.Orders.Remove(orderWithoutJoints);
             _db.Orders.Remove(order);
             _db.SaveChanges();
             return Redirect("~/Home/OrderList");
         }
-        
 
         public IActionResult Error()
         {

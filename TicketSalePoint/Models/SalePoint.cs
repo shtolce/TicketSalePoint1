@@ -11,8 +11,6 @@ namespace TicketSalePoint.Models
         public string address { get; set; }
         public User manager { get; set; }
         public void getCurrentQuantity(TicketEmission emission) {
-
-
         }
         public TicketEmission getEmission(DateTime begDateTime, DateTime endDateTime,List<TicketEmission> emissionsSet) {
             return null;
@@ -44,9 +42,6 @@ namespace TicketSalePoint.Models
                 arTick.Add(el);
 
             }
-
-
-
             return arTick;
         }
 
