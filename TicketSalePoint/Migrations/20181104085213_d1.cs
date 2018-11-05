@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TicketSalePoint.Migrations
 {
-    public partial class MigDB : Migration
+    public partial class d1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,24 +95,23 @@ namespace TicketSalePoint.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Orders",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    address = table.Column<string>(nullable: true),
-                    cardid = table.Column<int>(nullable: true),
-                    coName = table.Column<string>(nullable: true),
-                    firstName = table.Column<string>(nullable: true),
-                    type = table.Column<int>(nullable: false)
+                    Comments = table.Column<string>(nullable: true),
+                    Emissionid = table.Column<int>(nullable: true),
+                    InitialCost = table.Column<double>(nullable: false),
+                    OrderDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.id);
+                    table.PrimaryKey("PK_Orders", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Users_Cards_cardid",
-                        column: x => x.cardid,
-                        principalTable: "Cards",
+                        name: "FK_Orders_TicketEmissions_Emissionid",
+                        column: x => x.Emissionid,
+                        principalTable: "TicketEmissions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -123,6 +122,7 @@ namespace TicketSalePoint.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    OrderId = table.Column<int>(nullable: false),
                     TicketEmissionid = table.Column<int>(nullable: true),
                     customerId = table.Column<string>(nullable: true),
                     isReserved = table.Column<bool>(nullable: false),
@@ -135,6 +135,12 @@ namespace TicketSalePoint.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tickets_TicketEmissions_TicketEmissionid",
                         column: x => x.TicketEmissionid,
@@ -152,6 +158,39 @@ namespace TicketSalePoint.Migrations
                         column: x => x.managerId,
                         principalTable: "ApplicationUser",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Orderid = table.Column<int>(nullable: true),
+                    address = table.Column<string>(nullable: true),
+                    age = table.Column<int>(nullable: false),
+                    cardid = table.Column<int>(nullable: true),
+                    coName = table.Column<string>(nullable: true),
+                    firstName = table.Column<string>(nullable: true),
+                    isChildren = table.Column<bool>(nullable: false),
+                    phoneNumber = table.Column<string>(nullable: true),
+                    type = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Users_Orders_Orderid",
+                        column: x => x.Orderid,
+                        principalTable: "Orders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Users_Cards_cardid",
+                        column: x => x.cardid,
+                        principalTable: "Cards",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -176,9 +215,19 @@ namespace TicketSalePoint.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_Emissionid",
+                table: "Orders",
+                column: "Emissionid");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SalePoints_managerid",
                 table: "SalePoints",
                 column: "managerid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_OrderId",
+                table: "Tickets",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_TicketEmissionid",
@@ -194,6 +243,11 @@ namespace TicketSalePoint.Migrations
                 name: "IX_Tickets_managerId",
                 table: "Tickets",
                 column: "managerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Orderid",
+                table: "Users",
+                column: "Orderid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_cardid",
@@ -219,13 +273,16 @@ namespace TicketSalePoint.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "TicketEmissions");
-
-            migrationBuilder.DropTable(
                 name: "ApplicationUser");
 
             migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
                 name: "Cards");
+
+            migrationBuilder.DropTable(
+                name: "TicketEmissions");
         }
     }
 }

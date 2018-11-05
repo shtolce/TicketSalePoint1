@@ -115,9 +115,11 @@ namespace TicketSalePoint.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("OrderId");
+                    b.Property<int?>("Orderid");
 
                     b.Property<int?>("TicketEmissionid");
+
+                    b.Property<int>("_OrderId");
 
                     b.Property<string>("customerId");
 
@@ -135,7 +137,7 @@ namespace TicketSalePoint.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("Orderid");
 
                     b.HasIndex("TicketEmissionid");
 
@@ -244,8 +246,7 @@ namespace TicketSalePoint.Migrations
                 {
                     b.HasOne("TicketSalePoint.Models.Order")
                         .WithMany("SoldTickets")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Orderid");
 
                     b.HasOne("TicketSalePoint.Models.TicketEmission")
                         .WithMany("ticketsSet")

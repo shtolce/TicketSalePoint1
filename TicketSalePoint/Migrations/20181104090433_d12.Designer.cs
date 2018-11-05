@@ -11,8 +11,8 @@ using TicketSalePoint.Models.dbcontexts;
 namespace TicketSalePoint.Migrations
 {
     [DbContext(typeof(TicketContext))]
-    [Migration("20181101131325_f")]
-    partial class f
+    [Migration("20181104090433_d12")]
+    partial class d12
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,9 +116,11 @@ namespace TicketSalePoint.Migrations
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("OrderId");
+                    b.Property<int?>("Orderid");
 
                     b.Property<int?>("TicketEmissionid");
+
+                    b.Property<int>("_OrderId");
 
                     b.Property<string>("customerId");
 
@@ -135,6 +137,8 @@ namespace TicketSalePoint.Migrations
                     b.Property<int>("type");
 
                     b.HasKey("id");
+
+                    b.HasIndex("Orderid");
 
                     b.HasIndex("TicketEmissionid");
 
@@ -241,6 +245,10 @@ namespace TicketSalePoint.Migrations
 
             modelBuilder.Entity("TicketSalePoint.Models.Ticket", b =>
                 {
+                    b.HasOne("TicketSalePoint.Models.Order")
+                        .WithMany("SoldTickets")
+                        .HasForeignKey("Orderid");
+
                     b.HasOne("TicketSalePoint.Models.TicketEmission")
                         .WithMany("ticketsSet")
                         .HasForeignKey("TicketEmissionid");

@@ -39,7 +39,7 @@ namespace TicketSalePoint.Models
             get;
             set;
         }
-        public int OrderId {
+        public int _OrderId {
             get;
             set;
         }
@@ -51,6 +51,7 @@ namespace TicketSalePoint.Models
             this.price = price;
         //    this.id = id;
             this.place = place;
+            
         }
 
 

@@ -11,7 +11,7 @@ using TicketSalePoint.Services;
 using Microsoft.EntityFrameworkCore;
 using TicketSalePoint.Models.dbcontexts;
 using Microsoft.AspNetCore.Http;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace TicketSalePoint.Controllers
 {
@@ -61,7 +61,7 @@ namespace TicketSalePoint.Controllers
             */
             return View();
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Sell(int curEmId)
         {
@@ -121,6 +121,7 @@ namespace TicketSalePoint.Controllers
             return View(_service.ivm);
         }
 
+        [Authorize(Roles = "admin")]
         public IActionResult SellForm(string name, int id, int curEmissionId)
         {
             _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmissionId);
@@ -143,6 +144,8 @@ namespace TicketSalePoint.Controllers
             return View();
         }
         [HttpGet]
+
+        [Authorize(Roles = "admin")]
         public IActionResult OrderList()
         {
             ViewData["Message"] = "OrderList.";
@@ -150,6 +153,7 @@ namespace TicketSalePoint.Controllers
             return View(_service.ivm);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult deleteOrder(int deleteOrder)
         {
