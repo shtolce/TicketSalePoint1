@@ -122,6 +122,7 @@ namespace TicketSalePoint.Controllers
         }
 
         [Authorize(Roles = "admin")]
+        [HttpGet]
         public IActionResult SellForm(string name, int id, int curEmissionId)
         {
             _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmissionId);
@@ -140,7 +141,6 @@ namespace TicketSalePoint.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
             return View();
         }
         [HttpGet]

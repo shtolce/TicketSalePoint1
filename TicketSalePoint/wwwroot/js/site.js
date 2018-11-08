@@ -1,7 +1,8 @@
 ﻿// Write your JavaScript code.
 
+
 function sellTicketForm(e) {
-    $('body').load('/home/sellForm?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
+    $('body').load('https://ticketsalepoint20181107014415.azurewebsites.net/home/sellForm?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
 }
 
 
