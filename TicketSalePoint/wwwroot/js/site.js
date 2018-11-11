@@ -2,18 +2,28 @@
 
 
 function sellTicketForm(e) {
-   // $('body').load('/home/sellForm?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
-    
-    var form = document.createElement("form");
-    form.setAttribute("method", "GET");
-    form.setAttribute("action", '/home/sellForm?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
-    document.body.appendChild(form);
+//    $('container body-content').load('/home/sellForm?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
 
-    var filters = document.createElement('input');
-    filters.setAttribute('id', e.target.id.trim());
-    filters.setAttribute('curEmissionId', e.target.getAttribute("curEmissionId"));
-    form.appendChild(filters);
+    var form = document.createElement("form");
+    document.body.appendChild(form);
+    form.method = "POST";
+    //alert('/home/sellForm?id=' + e.target.id.trim() + '&curEmissionId=' + e.target.getAttribute("curEmissionId"));
+    form.action = '/home/sellForm';
+    
+    var element1 = document.createElement("input");
+
+    element1.name = 'id';
+    element1.type = 'hidden';
+    element1.value = e.target.id.trim();
+    form.appendChild(element1);
+    var element2 = document.createElement("input");
+    element2.name = 'curEmissionId';
+    element2.type = 'hidden';
+    element2.value = e.target.getAttribute("curEmissionId");
+    form.appendChild(element2);
+    
     form.submit();
+
 
 }
 
