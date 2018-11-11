@@ -70,6 +70,11 @@ namespace TicketSalePoint.Controllers
             int adultsNum = Convert.ToInt32(Request.Form["kol"].ToString());
             int childrensNum = Convert.ToInt32(Request.Form["kolChildren"].ToString());
             List<User> ListCustomer=new List<User>();
+            _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmId);
+            if (adultsNum + childrensNum > _service.emission.currentQuantity)
+            {
+                return Redirect("~/Home/TicketOrderError");
+            }
             for (int i=0;i<=adultsNum-1;i++)
             {
                 User Adult=new User();
@@ -87,7 +92,6 @@ namespace TicketSalePoint.Controllers
                 Child.isChildren = true;
                 ListCustomer.Add(Child);
             }
-            _service.emission = _db.TicketEmissions.FirstOrDefault(t => t.id == curEmId);
             res = SalePoint.sellTicket(ref _service.emission, adultsNum, childrensNum);
             _service.ivm.currentTicketsEmission = _service.emission;
             _service.ivm.currentTicketsSet = _service.emission.ticketsSet;
@@ -131,6 +135,13 @@ namespace TicketSalePoint.Controllers
             return View(_service.ivm);
         }
 
+        public IActionResult TicketOrderError()
+        {
+            ViewData["Message"] = "На данный сеанс нет нужного количества билетов.";
+
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -165,6 +176,8 @@ namespace TicketSalePoint.Controllers
             //tsIntersected.ForEach(t => { t.isSold = false;t.price = 0; });
             st.ForEach(t => { t.isSold = false; t.price = 0; });
             //_db.Orders.Remove(orderWithoutJoints);
+            
+            order.Emission.currentQuantity+= order.SoldTickets.Count;
             _db.Orders.Remove(order);
             _db.SaveChanges();
             return Redirect("~/Home/OrderList");

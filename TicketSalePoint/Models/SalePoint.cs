@@ -35,11 +35,13 @@ namespace TicketSalePoint.Models
             //emission.ticketsSet.Where<Ticket>(t => t.place == place).First().isSold = true;
             //emission.currentQuantity--;
             List<Ticket> arTick=new List<Ticket>();
+            var elems = emission.ticketsSet.Where<Ticket>(t => t.isSold == false).ToList();
             for (int i = 0; i <= adultsNum + childrensNum - 1; i++)
             {
-                var el = emission.ticketsSet.Where<Ticket>(t => t.isSold == false).ElementAt(i);
+                var el = elems.ElementAt(i);
                 el.isSold = true;
                 arTick.Add(el);
+                emission.currentQuantity--;
 
             }
             return arTick;
