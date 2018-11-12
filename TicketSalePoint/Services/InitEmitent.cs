@@ -38,23 +38,45 @@ namespace TicketSalePoint.Services
             return _db.TicketEmissions.Include(t => t.ticketsSet).FirstOrDefault(t => t.endDateTime >= endDate & t.begDateTime <= begDate);
         }
 
+        public void GetCreateEm(int year,int month,int day) 
+        {
+
+            if (IsEmissionExist(new DateTime(year, month, day, 11, 0, 0), new DateTime(year, month, day, 13, 59, 59)))  
+                 emission = GetEmission(new DateTime(year, month, day, 11, 0, 0), new DateTime(year, month, day, 13, 59, 59));
+            else
+            {
+                emission = CreateEmission(PRICE, new DateTime(year, month, day, 11, 0, 0), new DateTime(year, month, day, 13, 59, 59));
+            }
+
+            if (IsEmissionExist(new DateTime(year, month, day, 14, 0, 0), new DateTime(year, month, day, 16, 59, 59)))
+                emission = GetEmission(new DateTime(year, month, day, 14, 0, 0), new DateTime(year, month, day, 16, 59, 59));
+            else
+            {
+                emission = CreateEmission(PRICE, new DateTime(year, month, day, 14, 0, 0), new DateTime(year, month, day, 16, 59, 59));
+            }
+
+            if (IsEmissionExist(new DateTime(year, month, day, 17, 0, 0), new DateTime(year, month, day, 19, 59, 59)))
+                emission = GetEmission(new DateTime(year, month, day, 17, 0, 0), new DateTime(year, month, day, 19, 59, 59));
+            else
+            {
+                emission = CreateEmission(PRICE, new DateTime(year, month, day, 17, 0, 0), new DateTime(year, month, day, 19, 59, 59));
+            }
+
+        }
+
+
         public InitEmitent(TicketContext db)
         {
             this._db = db;
-
-            if (IsEmissionExist(new DateTime(2018, 10, 12, 0, 0, 1), new DateTime(2018, 10, 12, 6, 0, 0)))  
-                 emission = GetEmission(new DateTime(2018, 10, 12, 0, 0, 1), new DateTime(2018, 10, 12, 6, 0, 0));
-            else
+            for (int i=14;i<=30;i++)
             {
-                emission = CreateEmission(PRICE, new DateTime(2018, 10, 12, 0, 0, 1), new DateTime(2018, 10, 12, 6, 0, 1));
+                GetCreateEm(2018, 12, i);
+            }
+            for (int i = 1; i <= 14; i++)
+            {
+                GetCreateEm(2019, 1, i);
             }
 
-            if (IsEmissionExist(new DateTime(2018, 10, 12, 6, 0, 1), new DateTime(2018, 10, 12, 23, 0, 0)))
-                emission = GetEmission(new DateTime(2018, 10, 12, 6, 0, 1), new DateTime(2018, 10, 12, 23, 0, 0));
-            else
-            {
-                emission = CreateEmission(PRICE, new DateTime(2018, 10, 12, 6, 0, 1), new DateTime(2018, 10, 12, 23, 0, 0));
-            }
 
 
             salePoints = new List<SalePoint>() {
